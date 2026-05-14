@@ -5,13 +5,13 @@ on:
     branches: [ main ]
     paths:
       - 'java-services/**'
-      - 'protos/**'
+      - 'cpp-core/proto/**'
       - '.github/workflows/ci-java.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'java-services/**'
-      - 'protos/**'
+      - 'cpp-core/proto/**'
       - '.github/workflows/ci-java.yml'
 
 jobs:
@@ -31,4 +31,6 @@ jobs:
     - name: Build and Test with Maven
       run: |
         cd java-services
+        echo "Checking POM file existence and size:"
+        ls -al pom.xml
         mvn -B clean verify
