@@ -1,1 +1,40 @@
+name: C++ Core CI
 
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'cpp-core/**'
+      - 'protos/**'
+      - '.github/workflows/ci-cpp.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'cpp-core/**'
+      - 'protos/**'
+      - '.github/workflows/ci-cpp.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential \
+        protobuf-compiler libprotobuf-dev \
+        libgrpc++-dev protobuf-compiler-grpc
+
+    - name: Configure CMake
+      run: cmake -S cpp-core -B cpp-core/build
+
+    - name: Build Core Engine
+      run: cmake --build cpp-core/build -j $(nproc)
+
+    - name: Run C++ Unit Tests
+      run: |
+        cd cpp-core/build
+        ctest --output-on-failure
