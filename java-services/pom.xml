@@ -29,7 +29,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- gRPC Spring Boot Starter (Spring Boot 3.x / Jakarta EE compatible) -->
+        <!-- Fixed gRPC Spring Boot Starter for Jakarta EE/Spring Boot 3.x -->
         <dependency>
             <groupId>net.devh</groupId>
             <artifactId>grpc-client-spring-boot-starter</artifactId>
