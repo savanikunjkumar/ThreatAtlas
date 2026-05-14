@@ -23,27 +23,20 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- gRPC Dependencies -->
         <dependency>
             <groupId>net.devh</groupId>
             <artifactId>grpc-client-spring-boot-starter</artifactId>
             <version>2.15.0</version>
         </dependency>
-
-        <!-- Milvus SDK -->
         <dependency>
             <groupId>io.milvus</groupId>
             <artifactId>milvus-sdk-java</artifactId>
             <version>2.3.4</version>
         </dependency>
-
-        <!-- Lombok for cleaner DTOs -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -53,7 +46,6 @@
 
     <build>
         <extensions>
-            <!-- OS Sniffer for Protobuf compilation -->
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
@@ -61,13 +53,13 @@
             </extension>
         </extensions>
         <plugins>
-            <!-- Protobuf Compiler Plugin -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
                 <configuration>
-                    <protoSourceRoot>${project.basedir}/../protos</protoSourceRoot>
+                    <!-- Updated to match your cpp-core/proto structure -->
+                    <protoSourceRoot>${project.basedir}/../cpp-core/proto</protoSourceRoot>
                     <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
