@@ -23,20 +23,27 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Boot Web Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- gRPC Spring Boot Starter (Spring Boot 3.x / Jakarta EE compatible) -->
         <dependency>
             <groupId>net.devh</groupId>
             <artifactId>grpc-client-spring-boot-starter</artifactId>
             <version>3.1.0.RELEASE</version>
         </dependency>
+
+        <!-- Milvus Java SDK -->
         <dependency>
             <groupId>io.milvus</groupId>
             <artifactId>milvus-sdk-java</artifactId>
             <version>2.3.4</version>
         </dependency>
+
+        <!-- Project Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -53,12 +60,13 @@
             </extension>
         </extensions>
         <plugins>
+            <!-- Protobuf Maven Plugin -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
                 <configuration>
-                    <!-- Updated to match your cpp-core/proto structure -->
+                    <!-- Points to shared proto files in the cpp-core module -->
                     <protoSourceRoot>${project.basedir}/../cpp-core/proto</protoSourceRoot>
                     <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
