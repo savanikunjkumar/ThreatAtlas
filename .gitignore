@@ -1,1 +1,78 @@
+# ==========================================
+# ThreatAtlas Master GitIgnore
+# ==========================================
 
+# --- System Files ---
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.nb-gradle/
+.history/
+
+# --- C++ (cpp-core) ---
+cpp-core/build/
+cpp-core/bin/
+cpp-core/lib/
+cpp-core/out/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.out
+# Ignore generated gRPC/Proto headers in the src tree if not using build dir
+cpp-core/src/proto/*.pb.h
+cpp-core/src/proto/*.pb.cc
+
+# --- Java (java-services) ---
+java-services/target/
+java-services/out/
+java-services/.mvn/
+*.class
+*.war
+*.ear
+*.jar
+# Log files
+java-services/*.log
+java-services/logs/
+
+# --- Python (rag-llm) ---
+rag-llm/venv/
+rag-llm/.venv/
+rag-llm/__pycache__/
+rag-llm/*.py[cod]
+rag-llm/*$py.class
+rag-llm/.ipynb_checkpoints/
+rag-llm/.pytest_cache/
+
+# --- Large Models & Weights (rag-llm/models) ---
+# We ignore the actual model files (.gguf, .onnx, .bin) 
+# because they are too large for Git.
+rag-llm/models/*.gguf
+rag-llm/models/*.onnx
+rag-llm/models/*.bin
+rag-llm/models/*.pb
+rag-llm/models/llama-*/
+rag-llm/models/bert-*/
+
+# --- Infrastructure & Docker ---
+volumes/
+.env
+docker-compose.override.yml
+
+# --- Benchmarks & Data ---
+# Ignore actual result CSVs if you want to keep the repo clean
+benchmarks/*.csv
+# Ignore large local datasets not included in the sample
+datasets/large_pcaps/
+datasets/processed/
