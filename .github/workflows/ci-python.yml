@@ -1,1 +1,40 @@
+name: Python RAG CI
 
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'rag-llm/**'
+      - '.github/workflows/ci-python.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'rag-llm/**'
+      - '.github/workflows/ci-python.yml'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        cd rag-llm
+        python -m pip install --upgrade pip
+        # Touch requirements in case it's empty to prevent pip failure
+        touch requirements.txt 
+        pip install -r requirements.txt
+
+    - name: Syntax Check
+      run: |
+        cd rag-llm
+        # Compiles Python files to check for deep syntax errors
+        python -m compileall .
