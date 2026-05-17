@@ -1,1 +1,11 @@
-
+run_id,timestamp,component,model_or_db,batch_size,chunk_size,hardware,avg_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps
+run_001,2023-10-27T10:00:00Z,embedding,all-MiniLM-L6-v2,1,512,CPU_4Core,12.4,15.1,18.2,80.6
+run_002,2023-10-27T10:05:00Z,embedding,all-MiniLM-L6-v2,16,512,CPU_4Core,45.2,52.4,60.1,353.9
+run_003,2023-10-27T10:10:00Z,retrieval,FAISS_HNSW,1,N/A,CPU_4Core,1.2,1.5,2.1,833.3
+run_004,2023-10-27T10:15:00Z,retrieval,Milvus_IVF_PQ,1,N/A,Network_Local,4.8,6.2,8.5,208.3
+run_005,2023-10-27T10:20:00Z,reranking,ms-marco-MiniLM-L-6-v2,top_10,512,CPU_4Core,32.1,38.5,45.0,31.1
+run_006,2023-10-27T10:25:00Z,e2e_rag_pipeline,llama-2-7b-chat.Q4_K_M,1,N/A,CPU_4Core,1250.0,1400.0,1650.0,0.8
+run_007,2023-10-27T14:00:00Z,embedding,all-MiniLM-L6-v2,1,512,GPU_RTX4090,2.1,2.5,3.0,476.1
+run_008,2023-10-27T14:05:00Z,embedding,all-MiniLM-L6-v2,64,512,GPU_RTX4090,15.3,18.0,22.1,4183.0
+run_009,2023-10-27T14:10:00Z,reranking,ms-marco-MiniLM-L-6-v2,top_50,512,GPU_RTX4090,18.4,21.2,25.0,54.3
+run_010,2023-10-27T14:15:00Z,e2e_rag_pipeline,llama-2-7b-chat.Q4_K_M,1,N/A,GPU_RTX4090,350.0,380.0,420.0,2.8
