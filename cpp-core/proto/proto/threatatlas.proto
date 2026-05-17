@@ -1,1 +1,39 @@
+syntax = "proto3";
 
+package threatatlas;
+
+option java_multiple_files = true;
+option java_package = "com.threatatlas.grpc";
+option java_outer_classname = "ThreatAtlasProto";
+
+service VectorComputeService {
+  rpc GenerateEmbedding (LogChunk) returns (VectorResponse);
+  rpc SearchThreatIndex (SearchQuery) returns (SearchResponse);
+}
+
+message LogChunk {
+  string source_id = 1;
+  string timestamp = 2;
+  string raw_text = 3;
+}
+
+message VectorResponse {
+  string source_id = 1;
+  // Using repeated float for the multi-dimensional ONNX output
+  repeated float embeddings = 2; 
+}
+
+message SearchQuery {
+  repeated float query_vector = 1;
+  int32 top_k = 2;
+}
+
+message SearchCandidate {
+  string source_id = 1;
+  float distance = 2;
+  string snippet = 3;
+}
+
+message SearchResponse {
+  repeated SearchCandidate candidates = 1;
+}
