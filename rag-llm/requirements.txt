@@ -1,1 +1,29 @@
+# ==============================================================================
+# ThreatAtlas RAG/LLM Dependencies
+# ==============================================================================
 
+# --- Vector Database ---
+# The official Milvus client. Required for embed_offline.py to push data.
+pymilvus==2.3.6
+
+# --- Local LLM Inference ---
+# The absolute backbone of llm_rag.py.
+# ⚠️ CRITICAL WARNING ⚠️
+# If you just run 'pip install -r requirements.txt', it compiles for CPU and will be SLOW.
+# If you have a Mac (Apple Silicon), comment this line out and run:
+# CMAKE_ARGS="-DLLAMA_METAL=on" pip install llama-cpp-python==0.2.56
+# If you have an Nvidia GPU (Linux/Windows), run:
+# CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python==0.2.56
+llama-cpp-python==0.2.56
+
+# --- Embedding & ML Utils ---
+# You'll need these when you swap out the mock embedding function in embed_offline.py
+# to actually run the all-MiniLM ONNX model in Python.
+onnxruntime==1.17.1
+transformers==4.38.2
+huggingface-hub==0.21.3
+
+# --- Quality of Life ---
+# Because staring at a blank terminal during 50,000 offline batch inserts is torture.
+tqdm==4.66.2
+requests==2.31.0
