@@ -1,1 +1,57 @@
-
+[
+  {
+    "query_id": "eval_q_001",
+    "query": "Which IP address initiated the SSH brute force attack on the root account?",
+    "expected_source_ids": [
+      "syslog_auth_1045",
+      "syslog_auth_1046"
+    ],
+    "category": "log_analysis",
+    "difficulty": "easy",
+    "notes": "Basic keyword overlap test. FAISS should easily catch the 'SSH' and 'root' tokens."
+  },
+  {
+    "query_id": "eval_q_002",
+    "query": "Show me the privilege escalation commands executed after the initial breach.",
+    "expected_source_ids": [
+      "syslog_audit_882",
+      "syslog_auth_1050"
+    ],
+    "category": "lateral_movement",
+    "difficulty": "hard",
+    "notes": "Testing semantic similarity. The query uses 'privilege escalation', but the logs likely say 'sudo' or 'su root'. The ONNX embedder must bridge this semantic gap."
+  },
+  {
+    "query_id": "eval_q_003",
+    "query": "What is the severity and description of the WebP Heap Buffer Overflow vulnerability?",
+    "expected_source_ids": [
+      "cve_2023_4863"
+    ],
+    "category": "cve_lookup",
+    "difficulty": "medium",
+    "notes": "Testing exact-match entity extraction within the dense vector space."
+  },
+  {
+    "query_id": "eval_q_004",
+    "query": "Did any user successfully exfiltrate data via curl or wget to an external IP?",
+    "expected_source_ids": [
+      "syslog_network_441",
+      "syslog_network_442",
+      "syslog_network_445"
+    ],
+    "category": "data_exfiltration",
+    "difficulty": "medium",
+    "notes": "Tests the cross-encoder's ability to rank successful POST requests higher than blocked firewall drops."
+  },
+  {
+    "query_id": "eval_q_005",
+    "query": "Are there any indicators of compromise related to the Log4Shell vulnerability in the web server logs?",
+    "expected_source_ids": [
+      "nginx_access_9912",
+      "nginx_error_334"
+    ],
+    "category": "ioc_hunting",
+    "difficulty": "hard",
+    "notes": "The pipeline must associate 'Log4Shell' with JNDI lookup strings (${jndi:ldap://...}) hidden in user-agent or header logs."
+  }
+]
