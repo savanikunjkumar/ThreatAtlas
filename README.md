@@ -13,7 +13,7 @@
    ██║   ██║  ██║██║  ██║███████╗██║  ██║   ██║   ██║  ██║   ██║   ███████╗██║  ██║███████║
    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝  ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝
 ```
-
+ 
 ### **AI-Native Threat Intelligence & Retrieval Infrastructure**
 
 *Hybrid RAG · ANN Vector Search · Explainable AI · Local-First Inference*
